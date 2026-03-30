@@ -1,12 +1,12 @@
 export const PROJECT_STATUSES = ["Planning", "Active", "Completed"] as const;
 export const FEATURE_PRIORITIES = ["Must", "Should", "Could", "Won't"] as const;
 export const FEATURE_STATUSES = [
-  "Backlog",
-  "Planning",
-  "Ready",
+  "Not Started",
   "In Progress",
-  "Review",
   "Done",
+  "Review",
+  "Accepted",
+  "Needs Revision",
 ] as const;
 export const CONTRACT_METHODS = ["GET", "POST", "PATCH", "DELETE"] as const;
 export const CONTRACT_STATUSES = ["Draft", "Agreed", "Implemented"] as const;
@@ -18,6 +18,19 @@ export const CONSOLIDATION_TYPES = [
 ] as const;
 export const CONSOLIDATION_STATUSES = ["Pending", "Fixed"] as const;
 export const BLUEPRINT_TYPES = ["Entity", "Flow", "Rule", "UX Rule"] as const;
+
+// SDLC Phase enum for strict workflow
+export const SDLC_PHASES = [
+  "business-definition",
+  "actors",
+  "capabilities",
+  "features",
+  "api-contracts",
+  "ready-check",
+  "execution",
+  "review",
+] as const;
+export type SDLCPhase = (typeof SDLC_PHASES)[number];
 
 export const PFDS_COLLECTIONS = [
   "projects",

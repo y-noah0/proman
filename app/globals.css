@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  /* Light mode (default) */
   --bg: #f6f8f1;
   --bg-card: #fcfdf9;
   --ink: #13231a;
@@ -9,6 +10,24 @@
   --accent: #0e9f6e;
   --accent-2: #2354d7;
   --warn: #bc4b00;
+  --text-primary: #13231a;
+  --text-secondary: #496057;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode - dark blue-grey */
+    --bg: #0f1419;
+    --bg-card: #151b24;
+    --ink: #e4e8f0;
+    --ink-muted: #8b95a8;
+    --line: #2a3647;
+    --accent: #10b981;
+    --accent-2: #3b82f6;
+    --warn: #f97316;
+    --text-primary: #e4e8f0;
+    --text-secondary: #8b95a8;
+  }
 }
 
 @theme inline {
@@ -24,11 +43,12 @@
 
 body {
   background:
-    radial-gradient(circle at 5% 5%, color-mix(in oklab, var(--accent) 16%, white), transparent 40%),
-    radial-gradient(circle at 95% 5%, color-mix(in oklab, var(--accent-2) 10%, white), transparent 45%),
+    radial-gradient(circle at 5% 5%, color-mix(in oklab, var(--accent) 8%, var(--bg))40%),
+    radial-gradient(circle at 95% 5%, color-mix(in oklab, var(--accent-2) 6%, var(--bg)), transparent 45%),
     var(--bg);
   color: var(--ink);
   font-family: var(--font-space-grotesk), sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 a {
@@ -44,9 +64,14 @@ button {
 
 .card {
   border: 1px solid var(--line);
-  background: color-mix(in oklab, var(--bg-card) 92%, white);
+  background: color-mix(in oklab, var(--bg-card) 92%, var(--bg-card));
   border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(12, 29, 22, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 .subtle {
@@ -60,6 +85,8 @@ button {
   padding: 0.2rem 0.6rem;
   font-size: 0.75rem;
   line-height: 1.2;
+  background: color-mix(in oklab, var(--bg-card) 50%, transparent);
+  transition: all 0.2s ease;
 }
 
 .section-title {
@@ -81,5 +108,26 @@ button {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Dark mode scroll bar */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-muted);
   }
 }

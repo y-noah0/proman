@@ -44,6 +44,11 @@ function normalizeRecord(collection: PfdsCollectionName, payload: Record<string,
         startDate: payload.startDate ? String(payload.startDate) : "",
         endDate: payload.endDate ? String(payload.endDate) : "",
         status,
+        // SDLC Orchestrator fields
+        targetUsers: payload.targetUsers ? String(payload.targetUsers) : "",
+        coreProblem: payload.coreProblem ? String(payload.coreProblem) : "",
+        revenueModel: payload.revenueModel ? String(payload.revenueModel) : "",
+        phaseCompletion: payload.phaseCompletion ? (payload.phaseCompletion as Record<string, boolean>) : {},
         createdAt: now,
         updatedAt: now,
       };
@@ -60,7 +65,9 @@ function normalizeRecord(collection: PfdsCollectionName, payload: Record<string,
       return {
         name: String(payload.name ?? "Unnamed Capability"),
         projectId: String(payload.projectId ?? ""),
-        actorId: payload.actorId ? String(payload.actorId) : "",
+        actorIds: Array.isArray(payload.actorIds)
+          ? (payload.actorIds as string[]).map(String)
+          : [],
         description: String(payload.description ?? ""),
         createdAt: now,
         updatedAt: now,
@@ -71,7 +78,7 @@ function normalizeRecord(collection: PfdsCollectionName, payload: Record<string,
         : "Should";
       const status = FEATURE_STATUSES.includes(payload.status as (typeof FEATURE_STATUSES)[number])
         ? (payload.status as string)
-        : "Backlog";
+        : "Not Started";
 
       return {
         featureName: String(payload.featureName ?? "Untitled Feature"),
@@ -80,8 +87,7 @@ function normalizeRecord(collection: PfdsCollectionName, payload: Record<string,
         capabilityId: payload.capabilityId ? String(payload.capabilityId) : "",
         priority,
         status,
-        definitionOfReady: Boolean(payload.definitionOfReady),
-        definitionOfDone: Boolean(payload.definitionOfDone),
+        validatedFeature: Boolean(payload.validatedFeature),
         apiContractId: payload.apiContractId ? String(payload.apiContractId) : "",
         description: String(payload.description ?? ""),
         acceptanceCriteria: String(payload.acceptanceCriteria ?? ""),
